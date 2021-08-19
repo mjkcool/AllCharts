@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     axios.get('http://127.0.0.1:5000/api/melon')
     .then(res => {
-      console.log(res.data);
       setChart(...[res.data.melon])
     });
     

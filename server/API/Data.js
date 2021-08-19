@@ -1,7 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-async function getMellonHtml() {
+async function getMelonHtml() {
     try {
       return await axios.get("https://www.melon.com/chart/index.htm");
     } catch (error) {
@@ -9,9 +9,24 @@ async function getMellonHtml() {
     }
 }
 
-async function getMellonChart() {
+async function getGenie50Html(){
+    try {
+        return await axios.get("https://www.genie.co.kr/chart/top200?ditc=D&hh=15&rtm=Y&pg=1");
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function getGenie100Html(){
+    try {
+        return await axios.get("https://www.genie.co.kr/chart/top200?ditc=D&hh=15&rtm=Y&pg=2");
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getMelonChart() {
     let melonChartList = [];
-    let html = await getMellonHtml();
+    let html = await getMelonHtml();
     const $ = cheerio.load(html.data);
     const $ChartList = $("#tb_list form div.service_list_song table tbody tr")
     $ChartList.each(function(i, element) {
@@ -26,4 +41,4 @@ async function getMellonChart() {
     return melonChartList;
 }
 
-module.exports = { getMellonChart };
+module.exports = { getMelonChart };
