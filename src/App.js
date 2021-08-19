@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [Name, setName] = useState(null);
+  const [Chart, setChart] = useState([]);
+
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api')
-    .then(res=>res.json())
-    .then(data => setName(data.name));
+    axios.get('http://127.0.0.1:5000/api/melon')
+    .then(res => {
+      console.log(res.data);
+      setChart(...[res.data.melon])
+    });
+    
   })
 
   return (
     <div>
-      {Name ? `Hello ${Name}` : 'Nice to meet you'}
+      { Chart && Chart.map((item, index) => (
+          <React.Fragment key={index}>
+            <div>{item.rank} {item.title}/{item.singer}</div>
+          </React.Fragment>
+        ))
+      }
     </div>
   );
 }
